@@ -1,7 +1,8 @@
 ﻿namespace LibraryManagementSystem.Core.Models
+
 {
-	[Index(Name =nameof(Name),IsUnique = true)]	
-	public class Author:BaseModel
+	[Index(nameof(Name), IsUnique = true)]
+	public class Author : BaseModel
 	{
 		public int Id { get; set; }
 

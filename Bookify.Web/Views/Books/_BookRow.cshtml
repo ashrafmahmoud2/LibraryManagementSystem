@@ -1,0 +1,45 @@
+﻿@model BookViewModel
+
+<tr>
+    <td>@Model.ImageUrl</td>
+    <td>@Model.Title</td>
+    <td>@Model.Publisher</td>
+    <td>@Model.PublishingDate</td>
+    <td>@Model.Hall</td>
+    <td>
+        <span class="badge badge-light-@(Model.IsAvailableForRental ? "success" : "danger") js-status">
+            @(Model.IsAvailableForRental ? "Available" : "Not Available")
+        </span>
+    </td>
+    <td>
+        <span class="badge badge-light-@(Model.IsDeleted ? "danger" : "success") js-status">
+            @(Model.IsDeleted ? "Deleted" : "Active")
+        </span>
+    </td>
+    <td class="text-end">
+        <a href="#" class="btn btn-light btn-active-light-primary btn-flex btn-center btn-sm" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
+            Actions
+            <i class="bi bi-caret-down-fill text-primary ps-1"></i>
+        </a>
+        <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-semibold w-200px py-3" data-kt-menu="true">
+            <div class="menu-item px-3">
+                <a asp-action="Edit" asp-route-id="@Model.Id" class="menu-link px-3 js-render-modal"
+                   data-title="Edit Book" data-update="true">
+                    Edit
+                </a>
+            </div>
+            <div class="menu-item px-3">
+                <a asp-action="Details" asp-route-id="@Model.Id" class="menu-link px-3 js-render-modal"
+                   data-title="Edit Book" data-update="true">
+                    Details
+                </a>
+            </div>
+            <div class="menu-item px-3">
+                <a href="javascript:;" class="menu-link flex-stack px-3 js-toggle-status"
+                   data-url="@Url.Action("ToggleStatus", "Books", new { id = @Model.Id })">
+                    Toggle Status
+                </a>
+            </div>
+        </div>
+    </td>
+</tr>
