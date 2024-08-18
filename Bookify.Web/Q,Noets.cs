@@ -11,11 +11,14 @@
 image in servar and local
 Anonymous types
 ValidateAntiForgeryToken
+Working With Server Side DataTables section 18
  
 
 
 
 2-Noets
+ why in js we use var no let
+
 
 
 

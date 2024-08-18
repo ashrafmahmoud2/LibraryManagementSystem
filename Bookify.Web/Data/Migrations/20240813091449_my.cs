@@ -4,32 +4,32 @@
 
 namespace LibraryManagementSystem.Data.Migrations
 {
-	public partial class my : Migration
-	{
-		protected override void Up(MigrationBuilder migrationBuilder)
-		{
-			migrationBuilder.RenameColumn(
-				name: "ImageThmbnailUrl",
-				table: "Books",
-				newName: "ImageThumbnailUrl");
+    public partial class my : Migration
+    {
+        protected override void Up(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.RenameColumn(
+                name: "ImageThmbnailUrl",
+                table: "Books",
+                newName: "ImageThumbnailUrl");
 
-			migrationBuilder.RenameColumn(
-				name: "ImagePublicUrl",
-				table: "Books",
-				newName: "ImagePublicId");
-		}
+            migrationBuilder.RenameColumn(
+                name: "ImagePublicUrl",
+                table: "Books",
+                newName: "ImagePublicId");
+        }
 
-		protected override void Down(MigrationBuilder migrationBuilder)
-		{
-			migrationBuilder.RenameColumn(
-				name: "ImageThumbnailUrl",
-				table: "Books",
-				newName: "ImageThmbnailUrl");
+        protected override void Down(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.RenameColumn(
+                name: "ImageThumbnailUrl",
+                table: "Books",
+                newName: "ImageThmbnailUrl");
 
-			migrationBuilder.RenameColumn(
-				name: "ImagePublicId",
-				table: "Books",
-				newName: "ImagePublicUrl");
-		}
-	}
+            migrationBuilder.RenameColumn(
+                name: "ImagePublicId",
+                table: "Books",
+                newName: "ImagePublicUrl");
+        }
+    }
 }

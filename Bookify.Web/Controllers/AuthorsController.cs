@@ -1,100 +1,100 @@
 ﻿namespace LibraryManagementSystem.Controllers
 {
-	public class AuthorsController : Controller
-	{
-		private readonly ApplicationDbContext _context;
-		private readonly IMapper _mapper;
+    public class AuthorsController : Controller
+    {
+        private readonly ApplicationDbContext _context;
+        private readonly IMapper _mapper;
 
-		public AuthorsController(ApplicationDbContext context, IMapper mapper)
-		{
-			_context = context;
-			_mapper = mapper;
-		}
+        public AuthorsController(ApplicationDbContext context, IMapper mapper)
+        {
+            _context = context;
+            _mapper = mapper;
+        }
 
-		public IActionResult Index()
-		{
-			var authors = _context.Authors.AsNoTracking().ToList();
-			var viewModels = _mapper.Map<IEnumerable<AuthorViewModel>>(authors);
-			return View(viewModels);
-		}
+        public IActionResult Index()
+        {
+            var authors = _context.Authors.AsNoTracking().ToList();
+            var viewModels = _mapper.Map<IEnumerable<AuthorViewModel>>(authors);
+            return View(viewModels);
+        }
 
-		public IActionResult Create()
-		{
-			return PartialView("_Form");
-		}
-		[HttpPost]
-		[ValidateAntiForgeryToken]
-		public IActionResult Create(AuthorFormViewModel model)
-		{
-			if (!ModelState.IsValid)
-				return BadRequest();
-
-
-			var author = _mapper.Map<Author>(model);
-			_context.Add(author);
-			_context.SaveChanges();
-
-			var viewModel = _mapper.Map<AuthorViewModel>(author);
-			return View("_AuthorRow", viewModel);
-		}
-
-		[HttpGet]
-		[AjaxOnly]
-		public IActionResult Edit(int id)
-		{
-			var author = _context.Authors.Find(id);
+        public IActionResult Create()
+        {
+            return PartialView("_Form");
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Create(AuthorFormViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest();
 
 
-			var viewModel = _mapper.Map<AuthorFormViewModel>(author);
-			return PartialView("_Form", viewModel);
-		}
+            var author = _mapper.Map<Author>(model);
+            _context.Add(author);
+            _context.SaveChanges();
 
-		[HttpPost]
-		[ValidateAntiForgeryToken]
-		public IActionResult Edit(AuthorFormViewModel model)
-		{
-			if (!ModelState.IsValid)
-				return BadRequest();
+            var viewModel = _mapper.Map<AuthorViewModel>(author);
+            return View("_AuthorRow", viewModel);
+        }
 
-			var author = _context.Authors.Find(model.Id);
+        [HttpGet]
+        [AjaxOnly]
+        public IActionResult Edit(int id)
+        {
+            var author = _context.Authors.Find(id);
 
-			if (author is null)
-				return NotFound();
 
-			author = _mapper.Map(model, author);
-			author.LastUpdatedOn = DateTime.Now;
+            var viewModel = _mapper.Map<AuthorFormViewModel>(author);
+            return PartialView("_Form", viewModel);
+        }
 
-			_context.SaveChanges();
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(AuthorFormViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest();
 
-			var viewModel = _mapper.Map<AuthorViewModel>(author);
+            var author = _context.Authors.Find(model.Id);
 
-			return PartialView("_AuthorRow", viewModel);
-		}
+            if (author is null)
+                return NotFound();
 
-		public IActionResult ToggleStatus(int Id)
-		{
-			if (!ModelState.IsValid)
-				return BadRequest();
+            author = _mapper.Map(model, author);
+            author.LastUpdatedOn = DateTime.Now;
 
-			var author = _context.Authors.Find(Id);
+            _context.SaveChanges();
 
-			if (author is null)
-				return NotFound();
+            var viewModel = _mapper.Map<AuthorViewModel>(author);
 
-			author.IsDeleted = !author.IsDeleted;
-			_context.SaveChanges();
-			var viewModel = _mapper.Map<AuthorViewModel>(author);
+            return PartialView("_AuthorRow", viewModel);
+        }
 
-			return PartialView("_AuthorRow", viewModel);
+        public IActionResult ToggleStatus(int Id)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest();
 
-		}
+            var author = _context.Authors.Find(Id);
 
-		public IActionResult AllowItem(AuthorFormViewModel model)
-		{
-			var author = _context.Authors.SingleOrDefault(c => c.Name == model.Name);
-			var isAllowed = author is null || author.Id.Equals(model.Id);
+            if (author is null)
+                return NotFound();
 
-			return Json(isAllowed);
-		}
-	}
+            author.IsDeleted = !author.IsDeleted;
+            _context.SaveChanges();
+            var viewModel = _mapper.Map<AuthorViewModel>(author);
+
+            return PartialView("_AuthorRow", viewModel);
+
+        }
+
+        public IActionResult AllowItem(AuthorFormViewModel model)
+        {
+            var author = _context.Authors.SingleOrDefault(c => c.Name == model.Name);
+            var isAllowed = author is null || author.Id.Equals(model.Id);
+
+            return Json(isAllowed);
+        }
+    }
 }

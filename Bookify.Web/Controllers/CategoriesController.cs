@@ -1,108 +1,109 @@
 ﻿namespace LibraryManagementSystem.Controllers
 {
-	public class CategoriesController : Controller
-	{
-		private readonly ApplicationDbContext _context;
-		private readonly IMapper _mapper;
+    public class CategoriesController : Controller
+    {
+        private readonly ApplicationDbContext _context;
+        private readonly IMapper _mapper;
 
-		public CategoriesController(ApplicationDbContext context, IMapper mapper)
-		{
-			_context = context;
-			_mapper = mapper;
-		}
+        public CategoriesController(ApplicationDbContext context, IMapper mapper)
+        {
+            _context = context;
+            _mapper = mapper;
+        }
 
-		[HttpGet]
-		public IActionResult Index()
-		{
-			var categories = _context.Categories.AsNoTracking().ToList();
+        [HttpGet]
+        public IActionResult Index()
+        {
+            var categories = _context.Categories.AsNoTracking().ToList();
 
-			var viewModel = _mapper.Map<IEnumerable<CategoryViewModel>>(categories);
+            var viewModel = _mapper.Map<IEnumerable<CategoryViewModel>>(categories);
 
-			return View(viewModel);
-		}
+            return View(viewModel);
+        }
 
-		[HttpGet]
-		[AjaxOnly]
-		public IActionResult Create()
-		{
-			return PartialView("_Form");
-		}
 
-		[HttpPost]
-		[ValidateAntiForgeryToken]
-		public IActionResult Create(CategoryFormViewModel model)
-		{
-			if (!ModelState.IsValid)
-				return BadRequest();
+        [HttpGet]
+        [AjaxOnly]
+        public IActionResult Create()
+        {
+            return PartialView("_Form");
+        }
 
-			var category = _mapper.Map<Category>(model);
-			_context.Add(category);
-			_context.SaveChanges();
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Create(BookCopyFormViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest();
 
-			var viewModel = _mapper.Map<CategoryViewModel>(category);
+            var category = _mapper.Map<Category>(model);
+            _context.Add(category);
+            _context.SaveChanges();
 
-			return PartialView("_CategoryRow", viewModel);
-		}
+            var viewModel = _mapper.Map<CategoryViewModel>(category);
 
-		[HttpGet]
-		[AjaxOnly]
-		public IActionResult Edit(int id)
-		{
-			var category = _context.Categories.Find(id);
+            return PartialView("_CategoryRow", viewModel);
+        }
 
-			if (category is null)
-				return NotFound();
+        [HttpGet]
+        [AjaxOnly]
+        public IActionResult Edit(int id)
+        {
+            var category = _context.Categories.Find(id);
 
-			var viewModel = _mapper.Map<CategoryFormViewModel>(category);
+            if (category is null)
+                return NotFound();
 
-			return PartialView("_Form", viewModel);
-		}
+            var viewModel = _mapper.Map<CategoryFormViewModel>(category);
 
-		[HttpPost]
-		[ValidateAntiForgeryToken]
-		public IActionResult Edit(CategoryFormViewModel model)
-		{
-			if (!ModelState.IsValid)
-				return BadRequest();
+            return PartialView("_Form", viewModel);
+        }
 
-			var category = _context.Categories.Find(model.Id);
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(CategoryFormViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest();
 
-			if (category is null)
-				return NotFound();
+            var category = _context.Categories.Find(model.Id);
 
-			category = _mapper.Map(model, category);
-			category.LastUpdatedOn = DateTime.Now;
+            if (category is null)
+                return NotFound();
 
-			_context.SaveChanges();
+            category = _mapper.Map(model, category);
+            category.LastUpdatedOn = DateTime.Now;
 
-			var viewModel = _mapper.Map<CategoryViewModel>(category);
+            _context.SaveChanges();
 
-			return PartialView("_CategoryRow", viewModel);
-		}
+            var viewModel = _mapper.Map<CategoryViewModel>(category);
 
-		[HttpPost]
-		[ValidateAntiForgeryToken]
-		public IActionResult ToggleStatus(int id)
-		{
-			var category = _context.Categories.Find(id);
+            return PartialView("_CategoryRow", viewModel);
+        }
 
-			if (category is null)
-				return NotFound();
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult ToggleStatus(int id)
+        {
+            var category = _context.Categories.Find(id);
 
-			category.IsDeleted = !category.IsDeleted;
-			category.LastUpdatedOn = DateTime.Now;
+            if (category is null)
+                return NotFound();
 
-			_context.SaveChanges();
+            category.IsDeleted = !category.IsDeleted;
+            category.LastUpdatedOn = DateTime.Now;
 
-			return Ok(category.LastUpdatedOn.ToString());
-		}
+            _context.SaveChanges();
 
-		public IActionResult AllowItem(CategoryFormViewModel model)
-		{
-			var category = _context.Categories.SingleOrDefault(c => c.Name == model.Name);
-			var isAllowed = category is null || category.Id.Equals(model.Id);
+            return Ok(category.LastUpdatedOn.ToString());
+        }
 
-			return Json(isAllowed);
-		}
-	}
+        public IActionResult AllowItem(CategoryFormViewModel model)
+        {
+            var category = _context.Categories.SingleOrDefault(c => c.Name == model.Name);
+            var isAllowed = category is null || category.Id.Equals(model.Id);
+
+            return Json(isAllowed);
+        }
+    }
 }

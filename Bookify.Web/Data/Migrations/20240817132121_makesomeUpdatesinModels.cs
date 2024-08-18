@@ -4,7 +4,7 @@
 
 namespace LibraryManagementSystem.Data.Migrations
 {
-    public partial class addAuthorsTables : Migration
+    public partial class makesomeUpdatesinModels : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

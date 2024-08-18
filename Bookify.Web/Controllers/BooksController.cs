@@ -1,11 +1,6 @@
-﻿using LibraryManagementSystem.Filters;
-using CloudinaryDotNet;
-using CloudinaryDotNet.Actions;
+﻿using CloudinaryDotNet;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Options;
-using SixLabors.ImageSharp;
-using SixLabors.ImageSharp.Processing;
-using System.Linq;
 using System.Linq.Dynamic.Core;
 
 namespace Bookify.Web.Controllers
@@ -79,6 +74,7 @@ namespace Bookify.Web.Controllers
         {
             var book = _context.Books
                 .Include(b => b.Author)
+                .Include(b => b.Copies)
                 .Include(b => b.Categories)
                 .ThenInclude(c => c.Category)
                 .SingleOrDefault(b => b.Id == id);
