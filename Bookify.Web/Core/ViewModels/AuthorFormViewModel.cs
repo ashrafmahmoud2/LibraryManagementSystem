@@ -1,4 +1,6 @@
-﻿namespace LibraryManagementSystem.Core.ViewModels
+﻿using Bookify.Web.Core.Consts;
+
+namespace LibraryManagementSystem.Core.ViewModels
 {
     public class AuthorFormViewModel
     {
@@ -6,6 +8,8 @@
 
         [MaxLength(100, ErrorMessage = ValidationMessages.MaxLength), Display(Name = "Category")]
         [Remote("AllowItem", null!, AdditionalFields = "Id", ErrorMessage = ValidationMessages.Duplicated)]
+        [RegularExpression(RegexPatterns.CharactersOnly_Eng, ErrorMessage = ValidationMessages.OnlyEnglishLetters)]
+
         public string Name { get; set; } = null!;
 
     }

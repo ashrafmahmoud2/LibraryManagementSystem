@@ -44,6 +44,16 @@ namespace LibraryManagementSystem.Core.Mapping
             CreateMap<BookCopyFormViewModel, BookCopy>().ReverseMap();
 
 
+            //Users
+            CreateMap<ApplicationUser, UserViewModel>();
+            CreateMap<UserFormViewModel, ApplicationUser>()
+                .ForMember(des=> des.NormalizedEmail,opt=> opt.MapFrom(src=>src.Email.ToUpper()))
+                .ForMember(des=> des.NormalizedUserName,opt=> opt.MapFrom(src=>src.UserName.ToUpper()))
+                .ReverseMap();
+
+
+
+
 
         }
     }

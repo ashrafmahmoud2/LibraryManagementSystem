@@ -7,11 +7,11 @@
 
         [Display(Name = "Is Available For Rental ")]
         public bool IsAvailableForRental { get; set; }
-		
 
-		[Display(Name = "EditionNumber"), Range(1,1000,ErrorMessage =ValidationMessages.InvalidRange)]
+
+        [Display(Name = "EditionNumber"), Range(1, 1000, ErrorMessage = ValidationMessages.InvalidRange)]
         public int EditionNumber { get; set; }
-         public bool ShowRentalInput { get; set; }
+        public bool ShowRentalInput { get; set; }
 
     }
 }

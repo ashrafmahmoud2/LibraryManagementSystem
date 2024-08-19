@@ -34,7 +34,6 @@ Working With Server Side DataTables section 18
 
 
 5-Quastions in  coures
-  why we don't make book view model and details view model
    
 
 
