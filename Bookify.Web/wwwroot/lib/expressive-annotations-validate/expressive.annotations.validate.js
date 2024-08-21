@@ -530,7 +530,7 @@ var
             }
             return parsedValue;
         },
-        deserializeObject: function(form, fieldsMap, constsMap, enumsMap, parsersMap, prefix) {
+        deserializeObject: function(form, fieldsMap, ConstsMap, enumsMap, parsersMap, prefix) {
             function buildField(fieldName, fieldValue, object) {
                 var props, parent, i, match, arridx;
                 props = fieldName.split('.');
@@ -568,9 +568,9 @@ var
                     buildField(name, value, model);
                 }
             }
-            for (name in constsMap) {
-                if (constsMap.hasOwnProperty(name)) {
-                    value = constsMap[name];
+            for (name in ConstsMap) {
+                if (ConstsMap.hasOwnProperty(name)) {
+                    value = ConstsMap[name];
                     buildField(name, value, model);
                 }
             }
@@ -691,7 +691,7 @@ var
                                                                       // logic should be invoked or not - full type-detection parsing is not required at this stage, but we may have to extract such a value using
                                                                       // value parser, e.g. for an array which values are distracted among multiple fields)
         if (value !== undefined && value !== null && value !== '') { // check if the field value is set (continue if so, otherwise skip condition verification)
-            var model = modelHelper.deserializeObject(params.form, params.fieldsMap, params.constsMap, params.enumsMap, params.parsersMap, params.prefix);
+            var model = modelHelper.deserializeObject(params.form, params.fieldsMap, params.ConstsMap, params.enumsMap, params.parsersMap, params.prefix);
             toolchain.registerMethods(model);
             logger.dump(typeHelper.string.format('AssertThat expression of {0} field:\n{1}\nwill be executed within following context (methods hidden):\n{2}', element.name, params.expression, model));
             return modelHelper.ctxEval(params.expression, model); // verify assertion, if not satisfied => notify (return false)
@@ -705,7 +705,7 @@ var
         var exprVal, model;
         var message = 'RequiredIf expression of {0} field:\n{1}\nwill be executed within following context (methods hidden):\n{2}';
         if (!api.settings.optimize) { // no optimization - compute requirement condition despite the fact field value may be provided
-            model = modelHelper.deserializeObject(params.form, params.fieldsMap, params.constsMap, params.enumsMap, params.parsersMap, params.prefix);
+            model = modelHelper.deserializeObject(params.form, params.fieldsMap, params.ConstsMap, params.enumsMap, params.parsersMap, params.prefix);
             toolchain.registerMethods(model);
             logger.dump(typeHelper.string.format(message, element.name, params.expression, model));
             exprVal = modelHelper.ctxEval(params.expression, model);
@@ -721,7 +721,7 @@ var
                 }
             }
 
-            model = modelHelper.deserializeObject(params.form, params.fieldsMap, params.constsMap, params.enumsMap, params.parsersMap, params.prefix);
+            model = modelHelper.deserializeObject(params.form, params.fieldsMap, params.ConstsMap, params.enumsMap, params.parsersMap, params.prefix);
             toolchain.registerMethods(model);
             logger.dump(typeHelper.string.format(message, element.name, params.expression, model));
             exprVal = modelHelper.ctxEval(params.expression, model); // verify requirement, if satisfied => notify (return false)
@@ -740,14 +740,14 @@ var
 
     $.each(annotations.split(''), function() { // it would be ideal to have exactly as many handlers as there are unique annotations, but the number of annotations isn't known untill DOM is ready
         var adapter = typeHelper.string.format('assertthat{0}', $.trim(this));
-        $.validator.unobtrusive.adapters.add(adapter, ['expression', 'fieldsMap', 'constsMap', 'enumsMap', 'parsersMap', 'errFieldsMap'], function(options) {
+        $.validator.unobtrusive.adapters.add(adapter, ['expression', 'fieldsMap', 'ConstsMap', 'enumsMap', 'parsersMap', 'errFieldsMap'], function(options) {
             buildAdapter(adapter, options);
         });
     });
 
     $.each(annotations.split(''), function() {
         var adapter = typeHelper.string.format('requiredif{0}', $.trim(this));
-        $.validator.unobtrusive.adapters.add(adapter, ['expression', 'fieldsMap', 'constsMap', 'enumsMap', 'parsersMap', 'errFieldsMap', 'allowEmpty'], function(options) {
+        $.validator.unobtrusive.adapters.add(adapter, ['expression', 'fieldsMap', 'ConstsMap', 'enumsMap', 'parsersMap', 'errFieldsMap', 'allowEmpty'], function(options) {
             buildAdapter(adapter, options);
         });
     });

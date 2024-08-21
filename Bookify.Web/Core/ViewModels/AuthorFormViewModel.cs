@@ -1,16 +1,14 @@
-﻿using Bookify.Web.Core.Consts;
-
-namespace LibraryManagementSystem.Core.ViewModels
+﻿namespace LibraryManagementSystem.Core.ViewModels
 {
-    public class AuthorFormViewModel
-    {
-        public int Id { get; set; }
+	public class AuthorFormViewModel
+	{
+		public int Id { get; set; }
 
-        [MaxLength(100, ErrorMessage = ValidationMessages.MaxLength), Display(Name = "Category")]
-        [Remote("AllowItem", null!, AdditionalFields = "Id", ErrorMessage = ValidationMessages.Duplicated)]
-        [RegularExpression(RegexPatterns.CharactersOnly_Eng, ErrorMessage = ValidationMessages.OnlyEnglishLetters)]
+		[MaxLength(100, ErrorMessage = ValidationMessages.MaxLength), Display(Name = "Category")]
+		[Remote("AllowItem", null!, AdditionalFields = "Id", ErrorMessage = ValidationMessages.Duplicated)]
+		[RegularExpression(RegexPatterns.CharactersOnly_Eng, ErrorMessage = ValidationMessages.OnlyEnglishLetters)]
 
-        public string Name { get; set; } = null!;
+		public string Name { get; set; } = null!;
 
-    }
+	}
 }

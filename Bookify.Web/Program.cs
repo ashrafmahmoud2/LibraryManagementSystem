@@ -1,4 +1,5 @@
 using LibraryManagementSystem.Core.Mapping;
+using LibraryManagementSystem.Helpers;
 using LibraryManagementSystem.Seeds;
 using Microsoft.AspNetCore.Identity;
 using System.Reflection;
@@ -9,7 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(connectionString));
+	options.UseSqlServer(connectionString));
 
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
@@ -17,18 +18,20 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
-    .AddEntityFrameworkStores<ApplicationDbContext>()
-    .AddDefaultUI()
-    .AddDefaultTokenProviders();
+	.AddEntityFrameworkStores<ApplicationDbContext>()
+	.AddDefaultUI()
+	.AddDefaultTokenProviders();
 
 builder.Services.Configure<IdentityOptions>(options =>
 {
-    options.Password.RequiredLength = 8;
+	options.Password.RequiredLength = 8;
 
-    options.User.RequireUniqueEmail = true;
+	options.User.RequireUniqueEmail = true;
+
+	
 });
 
-
+builder.Services.AddScoped<IUserClaimsPrincipalFactory<ApplicationUser>, ApplicationUserClaimsPrincipalFactory>();
 
 builder.Services.AddControllersWithViews();
 
@@ -43,13 +46,13 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseMigrationsEndPoint();
+	app.UseMigrationsEndPoint();
 }
 else
 {
-    app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-    app.UseHsts();
+	app.UseExceptionHandler("/Home/Error");
+	// The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+	app.UseHsts();
 }
 
 app.UseHttpsRedirection();
@@ -74,8 +77,8 @@ await DefaultUsers.SeedAdminUserAsync(userManger);
 
 
 app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+	name: "default",
+	pattern: "{controller=Home}/{action=Index}/{id?}");
 app.MapRazorPages();
 
 app.Run();

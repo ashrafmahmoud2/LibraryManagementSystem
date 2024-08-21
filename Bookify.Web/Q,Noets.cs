@@ -36,6 +36,9 @@ Working With Server Side DataTables section 18
 5-Quastions in  coures
    
 
+6-linkes
+https://preview.keenthemes.com/metronic8/demo14/apps/ecommerce/customers/details.html
+
 
  
  
