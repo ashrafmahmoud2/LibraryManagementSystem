@@ -9,14 +9,17 @@
 
   <ItemGroup>
     <Content Remove="wwwroot\js\books-details.js" />
+    <Content Remove="wwwroot\js\Subscriber-Form.js" />
   </ItemGroup>
 
   <ItemGroup>
     <_ContentIncludedByDefault Remove="wwwroot\js\books-details.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\Subscriber-Form.js" />
   </ItemGroup>
 
   <ItemGroup>
     <None Include="wwwroot\js\books-details.js" />
+    <None Include="wwwroot\js\Subscriber-Form.js" />
   </ItemGroup>
 
   <ItemGroup>
@@ -38,6 +41,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="wwwroot\images\Subscribers\thumb\" />
     <Folder Include="wwwroot\images\users\" />
   </ItemGroup>
 

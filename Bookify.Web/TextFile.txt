@@ -1,16 +1,10 @@
-﻿@model BookFormViewModel
-
-@{
-    ViewData["Title"] = "Book Form";
-}
-
-<div class="card shadow-sm">
+﻿ <div class="card shadow-sm">
     <div class="card-header">
         <h3 class="card-title">@(Model.Id.Equals(0) ? "Add" : "Edit") Book</h3>
     </div>
     <div class="card-body">
         <form method="post" asp-controller="Books" enctype="multipart/form-data" id="Form">
-            @if (Model.Id > 0)
+            @if (Model.Id.Equals(0))
             {
                 <input type="hidden" asp-for="Id" />
             }
@@ -18,7 +12,7 @@
                 <!--begin::Image input-->
                 <div class="image-input image-input-empty"
                      data-kt-image-input="true"
-                     style="background-image: url('@(!string.IsNullOrEmpty(Model.ImageThumbnailUrl) ? Model.ImageThumbnailUrl : "/images/books/no-book.jpg")')">           
+                     style="background-image: url('@(!string.IsNullOrEmpty(Model.ImageThumbnailUrl) ? Model.ImageThumbnailUrl : "/images/books/no-book.jpg")')">
                     <!--begin::Image preview wrapper-->
                     <div class="image-input-wrapper w-125px h-200px"></div>
                     <!--end::Image preview wrapper-->
@@ -59,102 +53,67 @@
                         <div class="col">
                             <div class="mb-5">
                                 <div class="form-floating mb-2">
-                                    <input type="text" class="form-control form-control-solid" placeholder="Title" asp-for="Title" />
-                                    <label asp-for="Title"></label>
+                                    <input type="text" class="form-control form-control-solid" placeholder="Name" asp-for="FirstName" />
+                                    <label asp-for="FirstName"></label>
                                 </div>
-                                <span asp-validation-for="Title" class="text-danger d-block"></span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <div class="mb-5">
-                                <div class="form-floating mb-2">
-                                    <select class="form-select form-select-solid js-select2" data-placeholder="Select an author" asp-for="AuthorId" asp-items="@Model.Authors">
-                                        <option value="">Select an author</option>
-                                    </select>
-                                    <label asp-for="AuthorId"></label>
-                                </div>
-                                <span asp-validation-for="AuthorId" class="text-danger d-block"></span>
-                            </div>
-                        </div>
-                    </div>
-              
-                    <div class="row">
-                        <div class="col">
-                            <div class="mb-5">
-                                <div class="mb-2">
-                                    <select class="form-select form-select-solid js-select2" data-placeholder="Select categories" asp-for="SelectedCategories" asp-items="@Model.Categories">
-                                        <option>Select categories</option>
-                                    </select>
-                                </div>
-                                <span asp-validation-for="SelectedCategories" class="text-danger d-block"></span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <div class="mb-5">
-                                <div class="form-floating mb-2">
-                                    <input type="text" class="form-control form-control-solid" placeholder="Publisher" asp-for="Publisher" />
-                                    <label asp-for="Publisher"></label>
-                                </div>
-                                <span asp-validation-for="Publisher" class="text-danger d-block"></span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <div class="mb-5">
-                                <div class="form-floating mb-2">
-                                    <input type="text" class="form-control form-control-solid js-datepicker" placeholder="Publishing Date" asp-for="PublishingDate" />
-                                    <label asp-for="PublishingDate"></label>
-                                </div>
-                                <span asp-validation-for="PublishingDate" class="text-danger d-block"></span>
+                                <span asp-validation-for="FirstName" class="text-danger d-block"></span>
                             </div>
                         </div>
                     </div>
 
-               @*      <div class="row">
+                    <div class="row">
                         <div class="col">
-                            <div class="mb-0">
-                                <label asp-for="PublishingDate"></label>
-                                <input data-placeholder="Publishing Date" class="form-control form-control-solid js-datepicker" 
-                                asp-for="PublishingDate"  />
+                            <div class="mb-5">
+                                <div class="form-floating mb-2">
+                                    <input type="text" class="form-control form-control-solid js-datepicker" placeholder="Date Of Birth"
+                                           asp-for="DateOfBirth" />
+                                    <label asp-for="DateOfBirth"></label>
+                                </div>
+                                <span asp-validation-for="DateOfBirth" class="text-danger d-block"></span>
                             </div>
                         </div>
-                    </div> *@
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <div class="mb-5">
+                                <div class="form-floating mb-2">
+                                    <input type="text" class="form-control form-control-solid" placeholder="National ID" asp-for="NationalID" />
+                                    <label asp-for="NationalID"></label>
+                                </div>
+                                <span asp-validation-for="NationalID" class="text-danger d-block"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <div class="mb-5">
+                                <div class="form-floating mb-2">
+                                   @*  asp-items="@Model.GovernorateId" *@
+                                    <select class="form-select form-select-solid js-select2" data-placeholder="Select a Governorate" asp-for="GovernorateId" 
+                                  >
+                                        <option value="">Select an author</option>
+                                    </select>
+                                    <label asp-for="GovernorateId"></label>
+                                </div>
+                                <span asp-validation-for="GovernorateId" class="text-danger d-block"></span>
+                            </div>
+                        </div>
+                    </div>
+
 
 
                     <div class="row mb-2 pt-3">
                         <div class="col">
                             <div class="form-check form-switch form-check-solid form-check-custom mb-2">
-                                <input class="form-check-input" type="checkbox" asp-for="IsAvailableForRental">
-                                <label class="form-check-label" asp-for="IsAvailableForRental"></label>
+                                <input class="form-check-input" type="checkbox" asp-for="HasWhatsApp">
+                                <label class="form-check-label" asp-for="HasWhatsApp"></label>
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col">
-                            <div class="mb-5">
-                                <div class="form-floating mb-2">
-                                    <input type="text" class="form-control form-control-solid" placeholder="Hall" asp-for="Hall" />
-                                    <label asp-for="Hall"></label>
-                                </div>
-                                <span asp-validation-for="Hall" class="text-danger d-block"></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-7" >
-                    <div class="mb-5">
-                        <div class="form-floating mb-2">
-                            <textarea class="form-control form-control-solid js-tinymce" placeholder="Description" asp-for="Description" ></textarea>
-                            <label asp-for="Description"></label>
-                        </div>
-                        <span asp-validation-for="Description" class="text-danger d-block"></span>
-                    </div>
-                </div>
+
+        
 
             </div>
         </form>
@@ -170,12 +129,4 @@
         </button>
         <a class="btn btn-light text-primary ms-3" asp-action="Index">Cancel</a>
     </div>
-</div>
-
-@section Scripts
-{
-	<script src="~/assets/plugins/tinymce/tinymce.bundle.js"></script>
-    <partial name="_ValidationScriptsPartial" />
-}
-
-
+</div> 

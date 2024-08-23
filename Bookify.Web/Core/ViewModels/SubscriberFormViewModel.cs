@@ -1,48 +1,58 @@
-﻿using UoN.ExpressiveAnnotations.NetCore.Attributes;
+﻿using CloudinaryDotNet.Actions;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using UoN.ExpressiveAnnotations.NetCore.Attributes;
 
 namespace LibraryManagementSystem.Core.ViewModels
 {
 	public class SubscriberFormViewModel
 	{
 
-		public string Id { get; set; }
+        public string? Key { get; set; }
+        [MaxLength(100), Display(Name = "First Name"),
+            RegularExpression(RegexPatterns.DenySpecialCharacters, ErrorMessage = ValidationMessages.DenySpecialCharacters)]
+        public string FirstName { get; set; } = null!;
+        [MaxLength(100), Display(Name = "Last Name"),
+            RegularExpression(RegexPatterns.DenySpecialCharacters, ErrorMessage = ValidationMessages.DenySpecialCharacters)]
+        public string LastName { get; set; } = null!;
 
-		[MaxLength(50, ErrorMessage = ValidationMessages.MaxLength)]
-		[Display(Name = "First Name")]
-		[RegularExpression(RegexPatterns.CharactersOnly_Eng, ErrorMessage = ValidationMessages.OnlyEnglishLetters)]
-		public string FirstName { get; set; } = null!;
+        [Display(Name = "Date Of Birth")]
+        [AssertThat("DateOfBirth <= Today()", ErrorMessage = ValidationMessages.NotAllowFutureDates)]
+        public DateTime DateOfBirth { get; set; } = DateTime.Now;
+        [MaxLength(14), Display(Name = "National ID"),
+            RegularExpression(RegexPatterns.NationalId, ErrorMessage = ValidationMessages.InvalidNationalId)]
+        [Remote("AllowNationalId", null!, AdditionalFields = "Key", ErrorMessage = ValidationMessages.Duplicated)]
+        public string NationalId { get; set; } = null!;
+        [MaxLength(11), Display(Name = "Mobile Number"),
+            RegularExpression(RegexPatterns.MobileNumber, ErrorMessage = ValidationMessages.InvalidMobileNumber)]
+        [Remote("AllowMobileNumber", null!, AdditionalFields = "Key", ErrorMessage = ValidationMessages.Duplicated)]
+        public string MobileNumber { get; set; } = null!;
 
-		[MaxLength(50, ErrorMessage = ValidationMessages.MaxLength)]
-		[Display(Name = "Second Name")]
-		[RegularExpression(RegexPatterns.CharactersOnly_Eng, ErrorMessage = ValidationMessages.OnlyEnglishLetters)]
-		public string SecondName { get; set; } = null!;
+        public bool HasWhatsApp { get; set; }
 
-		public string FullName => $"{FirstName} {SecondName}";
+        [MaxLength(150), EmailAddress]
+        [Remote("AllowEmail", null!, AdditionalFields = "Key", ErrorMessage = ValidationMessages.Duplicated)]
+        public string Email { get; set; } = null!;
 
-		[DataType(DataType.Date)]
-		[AssertThat("DateOfBirth > (DateTime.Now).AddYears(-18)", ErrorMessage = "The date must be today or earlier.")]
-		// [Assert that] it's a property by using ExpressiveAnnotations packeg  to check on the server side that PublishingDate <= Today()
-		public DateTime DateOfBirth { get; set; }
+        [RequiredIf("Key == ''", ErrorMessage = ValidationMessages.EmptyImage)]
+        public IFormFile? Image { get; set; }
 
-		[MaxLength(14, ErrorMessage = ValidationMessages.MaxLength)]
-		[RegularExpression(RegexPatterns.NationalId, ErrorMessage = ValidationMessages.InvalidNationalId)]
-		public string NationalID { get; set; } = null!;
+        [Display(Name = "Area")]
+        public int AreaId { get; set; }
 
-		[MaxLength(200, ErrorMessage = ValidationMessages.MaxLength)]
-		[EmailAddress]
-		[Remote("AllowEmail", AdditionalFields = nameof(Id), ErrorMessage = ValidationMessages.Duplicated)]
-		public string Email { get; set; } = null!;
+        public IEnumerable<SelectListItem>? Areas { get; set; } = new List<SelectListItem>();
 
-		[MaxLength(10, ErrorMessage = ValidationMessages.MaxLength)]
-		[Phone]
-		[Remote("AllowPhone", AdditionalFields = nameof(Id), ErrorMessage = ValidationMessages.Duplicated)]
-		[RegularExpression(RegexPatterns.MobileNumber, ErrorMessage = ValidationMessages.InvalidMobileNumber)]
-		public string PhoneNumber { get; set; } = null!;
+        [Display(Name = "Governorate")]
+        public int GovernorateId { get; set; }
 
-		public int GovernorateId { get; set; }
-		public int AreaId { get; set; }
-		public string Address { get; set; } = null!;
-		public bool HasWhatsApp { get; set; }
-		public string ImageUrl { get; set; } = null!;
-	}
+        public IEnumerable<SelectListItem>? Governorates { get; set; }
+
+        [MaxLength(500)]
+        public string Address { get; set; } = null!;
+
+        public string? ImageUrl { get; set; }
+        public string? ImageThumbnailUrl { get; set; }
+
+
+
+    }
 }

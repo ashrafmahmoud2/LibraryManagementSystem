@@ -1,0 +1,176 @@
+﻿@model SubscriberDetailsFormViewModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div class="d-flex flex-column flex-column-fluid container-fluid">
+    <!-- Toolbar -->
+    <div class="toolbar mb-5 mb-lg-7" id="kt_toolbar">
+        <div class="page-title d-flex flex-column me-3">
+            <h1 class="d-flex text-gray-900 fw-bold my-1 fs-3">Customer Details</h1>
+            <ul class="breadcrumb breadcrumb-dot fw-semibold text-gray-600 fs-7 my-1">
+                <li class="breadcrumb-item text-gray-600">
+                    <a href="/metronic8/demo14/index.html" class="text-gray-600 text-hover-primary">Subscriber</a>
+                </li>
+                <li class="breadcrumb-item text-gray-600">Search</li>
+                <li class="breadcrumb-item text-gray-600">Details</li>
+            </ul>
+        </div>
+        <div class="d-flex align-items-center py-2 py-md-1">
+            <a class="btn btn-primary" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
+        </div>
+    </div>
+
+    <!-- Content -->
+    <div class="content flex-column-fluid" id="kt_content">
+        <div class="d-flex flex-column flex-xl-row">
+            <!-- Sidebar -->
+            <div class="flex-column flex-lg-row-auto w-100 w-xl-350px mb-10">
+                <div class="card mb-5 mb-xl-8">
+                    <div class="card-body pt-15">
+                        <div class="d-flex flex-center flex-column mb-5">
+                            <div class="symbol symbol-150px symbol-circle mb-7">
+                                <img src="~/images/avatar.png" />
+                            </div>
+                            <a href="#" class="fs-3 text-gray-800 text-hover-primary fw-bold mb-1">@Model.FullName</a>
+                            <a href="#" class="fs-5 fw-semibold text-muted text-hover-primary mb-6">@Model.Email</a>
+                        </div>
+
+                        <div class="d-flex flex-stack fs-4 py-3">
+                            <div class="fw-bold">Details</div>
+                            <div class="badge badge-light-success d-inline">Active user</div>
+                        </div>
+
+                        <div class="separator separator-dashed my-3"></div>
+
+                        <div class="pb-5 fs-6">
+                            <div class="fw-bold mt-5">Account ID</div>
+                            <div class="text-gray-600">ID-@Model.Id</div>
+                            <div class="fw-bold mt-5">Mobile No.</div>
+                            <div class="text-gray-600"><a href="#" class="text-gray-600 text-hover-primary">@Model.MobileNumber</a></div>
+                            <div class="fw-bold mt-5">National ID</div>
+                            <div class="text-gray-600">@Model.NationalId</div>
+                            <div class="fw-bold mt-5">Date of Birth</div>
+                            <div class="text-gray-600">@Model.DateOfBirth</div>
+                            <div class="fw-bold mt-5">Address</div>
+                            <div class="text-gray-600"><a href="/metronic8/demo14/apps/ecommerce/sales/details.html" class="text-gray-600 text-hover-primary">@Model.Address</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="flex-lg-row-fluid ms-lg-15">
+                <ul class="nav nav-custom nav-tabs nav-line-tabs nav-line-tabs-2x border-0 fs-4 fw-semibold mb-8" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link text-active-primary pb-4 active" data-bs-toggle="tab" href="#kt_ecommerce_customer_overview" aria-selected="true" role="tab">Overview</a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link text-active-primary pb-4" data-bs-toggle="tab" href="#kt_ecommerce_customer_general" aria-selected="false" role="tab">General Settings</a>
+                    </li>
+                </ul>
+
+                <div class="tab-content" id="myTabContent">
+                    <!-- Overview Tab -->
+                    <div class="tab-pane fade show active" id="kt_ecommerce_customer_overview" role="tabpanel">
+                        <div class="row row-cols-1 row-cols-md-2 mb-6 mb-xl-9">
+                            <div class="col">
+                                <div class="card pt-4 h-md-100 mb-6 mb-md-0">
+                                    <div class="card-header border-0">
+                                        <div class="card-title">
+                                            <h2 class="fw-bold">Reward Points</h2>
+                                        </div>
+                                    </div>
+                                    <div class="card-body pt-0">
+                                        <div class="fw-bold fs-2">
+                                            <div class="d-flex">
+                                                <i class="ki-duotone ki-heart text-info fs-2x"></i>
+                                                <div class="ms-2">
+                                                    4,571 <span class="text-muted fs-4 fw-semibold">Points earned</span>
+                                                </div>
+                                            </div>
+                                            <div class="fs-7 fw-normal text-muted">Earn reward points with every purchase.</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <a href="#" class="card bg-info hoverable h-md-100">
+                                    <div class="card-body">
+                                        <i class="ki-duotone ki-award text-white fs-3x ms-n1"></i>
+                                        <div class="text-white fw-bold fs-2 mt-5">Premium Member</div>
+                                        <div class="fw-semibold text-white">Subscriber since:@Model.CreatedOn</div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="card pt-4 mb-6 mb-xl-9">
+                            <div class="card-header border-0">
+                                <div class="card-title">
+                                    <h2>Transaction History</h2>
+                                </div>
+                            </div>
+                            <div class="card-body pt-0 pb-5">
+                                <div class="table-responsive">
+                                    <table class="table align-middle table-row-dashed gy-5" id="kt_table_customers_payment">
+                                        <thead class="border-bottom border-gray-200 fs-7 fw-bold">
+                                            <tr class="text-start text-muted text-uppercase gs-0">
+                                                <th class="min-w-100px">Order No.</th>
+                                                <th>Status</th>
+                                                <th>Amount</th>
+                                                <th>Rewards</th>
+                                                <th>Date</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="fs-6 fw-semibold text-gray-600">
+                                            <tr>
+                                                <td><a href="/metronic8/demo14/apps/ecommerce/sales/details.html" class="text-gray-600 text-hover-primary mb-1">#14781</a></td>
+                                                <td><span class="badge badge-light-success">Successful</span></td>
+                                                <td>$1,200.00</td>
+                                                <td>120</td>
+                                                <td>14 Dec 2020, 8:43 pm</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- General Settings Tab -->
+                    <div class="tab-pane fade" id="kt_ecommerce_customer_general" role="tabpanel">
+                        <div class="row row-cols-1 row-cols-md-2 mb-6 mb-xl-9">
+                            <div class="col">
+                                <div class="card pt-4 h-md-100 mb-6 mb-md-0">
+                                    <div class="card-header border-0">
+                                        <div class="card-title">
+                                            <h2 class="fw-bold">General Settings</h2>
+                                        </div>
+                                    </div>
+                                    <div class="card-body pt-0">
+                                        <!-- Add your General Settings content here -->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <a href="#" class="card bg-info hoverable h-md-100">
+                                    <div class="card-body">
+                                        <i class="ki-duotone ki-award text-white fs-3x ms-n1"></i>
+                                        <div class="text-white fw-bold fs-2 mt-5">Another Feature</div>
+                                        <div class="fw-semibold text-white">Description of the feature</div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    
+      
+    </div>
+</div>
