@@ -4,6 +4,7 @@ using LibraryManagementSystem.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LibraryManagementSystem.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240824123637_UPDATESUSCRIPERTABLE")]
+    partial class UPDATESUSCRIPERTABLE
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -520,38 +522,6 @@ namespace LibraryManagementSystem.Data.Migrations
                     b.ToTable("Subscribers");
                 });
 
-            modelBuilder.Entity("LibraryManagementSystem.Core.Models.Subscription", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("CreateById")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("EndDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("StartDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("SubscriberId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CreateById");
-
-                    b.HasIndex("SubscriberId");
-
-                    b.ToTable("Subscriptions");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
@@ -849,23 +819,6 @@ namespace LibraryManagementSystem.Data.Migrations
                     b.Navigation("LastUpdatedBy");
                 });
 
-            modelBuilder.Entity("LibraryManagementSystem.Core.Models.Subscription", b =>
-                {
-                    b.HasOne("LibraryManagementSystem.Core.Models.ApplicationUser", "CreateBy")
-                        .WithMany()
-                        .HasForeignKey("CreateById");
-
-                    b.HasOne("LibraryManagementSystem.Core.Models.Subscriber", "Subscriber")
-                        .WithMany("Subscriptions")
-                        .HasForeignKey("SubscriberId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("CreateBy");
-
-                    b.Navigation("Subscriber");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -932,11 +885,6 @@ namespace LibraryManagementSystem.Data.Migrations
             modelBuilder.Entity("LibraryManagementSystem.Core.Models.Governorate", b =>
                 {
                     b.Navigation("Area");
-                });
-
-            modelBuilder.Entity("LibraryManagementSystem.Core.Models.Subscriber", b =>
-                {
-                    b.Navigation("Subscriptions");
                 });
 #pragma warning restore 612, 618
         }

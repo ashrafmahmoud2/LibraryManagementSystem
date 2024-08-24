@@ -1,8 +1,8 @@
 ﻿namespace LibraryManagementSystem.Core.ViewModels
 {
-	public class SubscriberDetailsFormViewModel
-	{
-        public int Id { get; set; }
+	public class SubscriberViewModel
+    {
+        public int Id { get; set; } 
         public string? Key { get; set; }
         public string? FullName { get; set; }
         public DateTime DateOfBirth { get; set; }

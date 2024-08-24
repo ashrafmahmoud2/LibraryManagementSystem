@@ -152,8 +152,7 @@
                     <div class="row">
                         <!--begin::Col-->
                         <div class="col-lg-6 fv-row fv-plugins-icon-container fv-plugins-bootstrap5-row-invalid">
-                            <select aria-label="Select a Country" data-control="select2" data-placeholder="Select a governorate..."
-                                    class="form-select form-select-solid form-select-lg fw-semibold"
+                            <select aria-label="Select a Country" data-control="select2" data-placeholder="Select a governorate..." class="form-select form-select-solid form-select-lg fw-semibold"
                                     asp-for="GovernorateId" asp-items="Model.Governorates">
                                 <option value="">Select a governorate...</option>
                             </select>
@@ -229,10 +228,9 @@
         <a class="btn btn-light text-primary ms-3" asp-action="Index">Cancel</a>
     </div>
 </div>
- 
+
 @section Scripts
 {
-
     <partial name="_ValidationScriptsPartial" />
-	<script src="~/js/subscriber-form.js" asp-append-version="true"></script>
+    <script src="~/js/subscriber-form.js" asp-append-version="true"></script>
 }

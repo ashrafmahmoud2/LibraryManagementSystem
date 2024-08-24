@@ -1,9 +1,11 @@
-using LibraryManagementSystem.Core.Mapping;
+ using LibraryManagementSystem.Core.Mapping;
 using LibraryManagementSystem.Helpers;
 using LibraryManagementSystem.Seeds;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Identity;
 using System.Reflection;
 using UoN.ExpressiveAnnotations.NetCore.DependencyInjection;
+using WhatsAppCloudApi.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -31,6 +33,9 @@ builder.Services.Configure<IdentityOptions>(options =>
 	
 });
 
+builder.Services.AddDataProtection().SetApplicationName(nameof(LibraryManagementSystem));
+
+
 builder.Services.AddScoped<IUserClaimsPrincipalFactory<ApplicationUser>, ApplicationUserClaimsPrincipalFactory>();
 
 builder.Services.AddControllersWithViews();
@@ -39,7 +44,7 @@ builder.Services.AddAutoMapper(Assembly.GetAssembly(typeof(MappingProfile)));
 builder.Services.AddExpressiveAnnotations();
 builder.Services.Configure<CloudinarySettings>(builder.Configuration.GetSection("CloudinarySettings"));
 
-
+builder.Services.AddWhatsAppApiClient(builder.Configuration);
 
 var app = builder.Build();
 

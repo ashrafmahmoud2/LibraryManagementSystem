@@ -24,6 +24,8 @@
 
 		public DbSet<Subscriber> Subscribers { get; set; }
 
+		public DbSet<Subscription> Subscriptions { get; set; }
+
 
 		protected override void OnModelCreating(ModelBuilder builder)
 		{

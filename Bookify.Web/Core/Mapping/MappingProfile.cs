@@ -52,25 +52,25 @@ namespace LibraryManagementSystem.Core.Mapping
                 .ReverseMap();
 
 
-            //Subscriber
-            CreateMap<Subscriber, SubscriberFormViewModel>().ReverseMap();
-            CreateMap<Subscriber, SubscriberSearchResultViewModel>()
-              .ForMember(des => des.FullName, opt => opt.MapFrom(src => $"{src.FirstName} {src.LastName}"));
-
-            CreateMap<Subscriber, SubscriberDetailsFormViewModel>()
-                .ForMember(des => des.FullName, opt => opt.MapFrom(src => $"{src.FirstName} {src.LastName}"))
-                .ForMember(des => des.Area, opt => opt.MapFrom(src => src.Area!.Name))
-                .ForMember(des => des.Governorate, opt => opt.MapFrom(src => src.Governorate!.Name));
-
-
-            //Areas /Governorate
+            //Governorates & Areas
             CreateMap<Governorate, SelectListItem>()
-                 .ForMember(des => des.Value, opt => opt.MapFrom(src => src.Id))
-                 .ForMember(des => des.Text, opt => opt.MapFrom(src => src.Name));
+                .ForMember(dest => dest.Value, opt => opt.MapFrom(src => src.Id))
+                .ForMember(dest => dest.Text, opt => opt.MapFrom(src => src.Name));
 
             CreateMap<Area, SelectListItem>()
-             .ForMember(des => des.Value, opt => opt.MapFrom(src => src.Id))
-             .ForMember(des => des.Text, opt => opt.MapFrom(src => src.Name));
+                .ForMember(dest => dest.Value, opt => opt.MapFrom(src => src.Id))
+                .ForMember(dest => dest.Text, opt => opt.MapFrom(src => src.Name));
+
+            //Subscribers
+            CreateMap<Subscriber, SubscriberFormViewModel>().ReverseMap();
+
+            CreateMap<Subscriber, SubscriberSearchResultViewModel>()
+                .ForMember(dest => dest.FullName, opt => opt.MapFrom(src => $"{src.FirstName} {src.LastName}"));
+
+            CreateMap<Subscriber, SubscriberViewModel>()
+                .ForMember(dest => dest.FullName, opt => opt.MapFrom(src => $"{src.FirstName} {src.LastName}"))
+                .ForMember(dest => dest.Area, opt => opt.MapFrom(src => src.Area!.Name))
+                .ForMember(dest => dest.Governorate, opt => opt.MapFrom(src => src.Governorate!.Name));
 
 
 
